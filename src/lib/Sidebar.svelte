@@ -12,6 +12,10 @@
         { name: 'Travel' },
         { name: 'TypeScript' }
     ];
+
+    const reloadPage = () => {
+        window.location.reload();
+    };
 </script>
 
 <div class="sidebar">
@@ -21,7 +25,7 @@
     <div class="section">
         <h2>All Notes</h2>
         <ul>
-            <li><img src="/icon-home.svg" alt="All Notes Icon">Todas las notas</li>
+            <li on:click={reloadPage}><img src="/icon-home.svg" alt="All Notes Icon">Todas las notas</li>
             <li><img src="/icon-archive.svg" alt="Archived Notes Icon">Notas archivadas</li>
         </ul>
     </div>
@@ -42,6 +46,7 @@
         padding: 20px;
         display: flex;
         flex-direction: column;
+        font-size: 12px;
     }
     .logo {
         display: flex;
@@ -66,6 +71,7 @@
         display: flex;
         align-items: center;
         margin-bottom: 10px;
+        cursor: pointer; 
     }
     .section li img {
         width: 20px;
@@ -73,5 +79,3 @@
         margin-right: 10px;
     }
 </style>
-
-

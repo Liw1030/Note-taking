@@ -6,6 +6,24 @@
     import Section3 from '$lib/Section3.svelte';
 </script>
 
+<div class="sidebar">
+    <Sidebar />
+</div>
+<div class="content">
+    <Header />
+    <div class="body">
+        <div class="section1">
+            <Section1 />
+        </div>
+        <div class="section2">
+            <Section2 />
+        </div>
+        <div class="section3">
+            <Section3 />
+        </div>
+    </div>
+</div>
+
 <style>
     .content {
         flex: 1;
@@ -25,21 +43,3 @@
 		height: 100%;
     }
 </style>
-
-<div class="sidebar">
-    <Sidebar />
-</div>
-<div class="content">
-    <Header />
-    <div class="body">
-        <div class="section1">
-            <Section1 />
-        </div>
-        <div class="section2">
-            <Section2 />
-        </div>
-        <div class="section3">
-            <Section3 />
-        </div>
-    </div>
-</div>

@@ -1,3 +1,11 @@
+<script>
+    import { searchQuery } from './store.js';
+
+    const handleSearch = (event) => {
+        searchQuery.set(event.target.value);
+    };
+</script>
+
 <div class="header">
     <h1>Todas las notas</h1>
     <div class="content2">
@@ -5,6 +13,7 @@
             class="search"
             type="text"
             placeholder="Buscar por titulo, contenido o tags.."
+            on:input={handleSearch}
         />
         <img src="/icon-settings.svg" alt="" />
     </div>
