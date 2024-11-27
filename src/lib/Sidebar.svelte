@@ -41,7 +41,7 @@
         </ul>
     </div>
     <div class="section">
-        <h2>Tags</h2>
+        <h2>Etiquetas</h2>
         <ul>
             {#each tags as tag}
                 <li><img src="/icon-tag.svg" alt="Tag Icon">{tag.name}</li>
