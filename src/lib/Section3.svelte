@@ -1,7 +1,7 @@
 <script>
     import { selectedNote, selectedNoteIdForDelete } from './store.js';
     import { onMount } from 'svelte';
-    import { deleteDoc, doc } from "firebase/firestore";
+    import { deleteDoc, doc, updateDoc } from "firebase/firestore"; // Importa updateDoc para actualizar documentos
     import { db } from "../lib/firebase";
 
     let noteId;
@@ -20,11 +20,20 @@
             selectedNote.set(null);
         }
     };
+
+    const handleArchiveClick = async () => {
+        if (noteId) {
+            const noteRef = doc(db, "notes", noteId);
+            await updateDoc(noteRef, { archived: true }); // Marca la nota como archivada
+            console.log("Nota archivada");
+            selectedNote.set(null); // Deselect the note after archiving
+        }
+    };
 </script>
 
 <div class="section">
     <div class="options">
-        <button class="archive">Archivar Nota</button>
+        <button class="archive" on:click={handleArchiveClick}>Archivar Nota</button> <!-- Añadimos el evento on:click -->
         <button class="delete" on:click={handleDeleteClick}>Eliminar Nota</button>
     </div>
 </div>

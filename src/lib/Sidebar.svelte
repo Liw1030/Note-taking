@@ -1,5 +1,10 @@
 <script>
-    // Ejemplo de datos para las etiquetas (tags)
+    import { getDocs, collection, query, where } from "firebase/firestore";
+    import { db } from "../lib/firebase"
+    import { onMount } from "svelte";
+
+    let archivedNotes = [];
+
     const tags = [
         { name: 'Cooking' },
         { name: 'Dev' },
@@ -16,6 +21,12 @@
     const reloadPage = () => {
         window.location.reload();
     };
+
+    onMount(async () => {
+        const q = query(collection(db, 'notes'), where('archived', '==',true));
+        const querySnapshot = await getDocs(q);
+        archivedNotes = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}));
+    })
 </script>
 
 <div class="sidebar">
@@ -23,7 +34,7 @@
         <img src="/logo.svg" alt="Logo">
     </div>
     <div class="section">
-        <h2>All Notes</h2>
+        <h2>Todas las notas</h2>
         <ul>
             <li on:click={reloadPage}><img src="/icon-home.svg" alt="All Notes Icon">Todas las notas</li>
             <li><img src="/icon-archive.svg" alt="Archived Notes Icon">Notas archivadas</li>
