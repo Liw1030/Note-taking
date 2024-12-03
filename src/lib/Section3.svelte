@@ -1,13 +1,13 @@
 <script>
     import { selectedNote, selectedNoteIdForDelete } from './store.js';
     import { onMount } from 'svelte';
-    import { deleteDoc, doc, updateDoc } from "firebase/firestore"; // Importa updateDoc para actualizar documentos
+    import { deleteDoc, doc, updateDoc } from "firebase/firestore";
     import { db } from "../lib/firebase";
 
     let noteId;
     let note;
 
-    $: selectedNote.subscribe(value => {
+    selectedNote.subscribe(value => {
         note = value;
         noteId = value ? value.id : null;
     });
@@ -24,19 +24,30 @@
     const handleArchiveClick = async () => {
         if (noteId) {
             const noteRef = doc(db, "notes", noteId);
-            await updateDoc(noteRef, { archived: true }); // Marca la nota como archivada
+            await updateDoc(noteRef, { archived: true });
             console.log("Nota archivada");
-            selectedNote.set(null); // Deselect the note after archiving
+            selectedNote.set(null);
+        }
+    };
+
+    const handleUnarchiveClick = async () => {
+        if (noteId) {
+            const noteRef = doc(db, "notes", noteId);
+            await updateDoc(noteRef, { archived: false });
+            console.log("Nota desarchivada");
+            selectedNote.set(null);
         }
     };
 </script>
 
 <div class="section">
     <div class="options">
-        <button class="archive" on:click={handleArchiveClick}>Archivar Nota</button> <!-- Añadimos el evento on:click -->
+        <button class="archive" on:click={handleArchiveClick}>Archivar Nota</button>
+        <button class="unarchive" on:click={handleUnarchiveClick}>Desarchivar Nota</button>
         <button class="delete" on:click={handleDeleteClick}>Eliminar Nota</button>
     </div>
 </div>
+
 
 <style>
     .section {
@@ -61,7 +72,8 @@
         padding-left: 30px;
         background: url("/icon-archive.svg") no-repeat 4px center;
         background-size: 20px;
-        margin: 20px;
+        cursor: pointer;
+        margin: 10px 20px;
     }
 
     .archive:hover{
@@ -77,11 +89,27 @@
         padding-left: 30px;
         background: url("/icon-delete.svg") no-repeat 4px center;
         background-size: 20px;
-        margin: 0px 20px;
         cursor: pointer;
+        margin: 10px 20px;
     }
 
     .delete:hover{
+        background-color: rgba(134, 134, 134, 0.26);
+    }
+
+    .unarchive{
+        background-color: transparent;
+        border: 1px solid rgb(167, 167, 167);
+        border-radius: 5px;
+        width: 200px;
+        height: 40px;
+        padding-left: 30px;
+        background: url("/icon-delete.svg") no-repeat 4px center;
+        background-size: 20px;
+        cursor: pointer;
+        margin: 10px 20px;
+    }
+    .unarchive:hover{
         background-color: rgba(134, 134, 134, 0.26);
     }
 </style>
